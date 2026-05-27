@@ -1,3 +1,17 @@
+// ── MOBILE DETECTION ──────────────────────────────
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+  || (window.innerWidth <= 768);
+
+// Reduce particle counts on mobile for performance
+const STAR_COUNT = isMobile ? 100 : 220;
+const FIREWORK_INTERVAL = isMobile ? 2200 : 1100;
+const INITIAL_BURST = isMobile ? 3 : 5;
+const LANTERN_COUNT = isMobile ? 6 : 12;
+const LANTERN_INTERVAL = isMobile ? 3000 : 1800;
+const GOLD_PARTICLE_COUNT = isMobile ? 10 : 20;
+const GOLD_PARTICLE_INTERVAL = isMobile ? 2000 : 1200;
+const EXPLOSION_PARTICLES = isMobile ? 30 : 60;
+
 // ── STARS ──────────────────────────────────────────
 const starsC = document.getElementById('stars-canvas');
 const sCtx   = starsC.getContext('2d');
@@ -6,7 +20,7 @@ let stars = [];
 function resizeStars() {
   starsC.width  = window.innerWidth;
   starsC.height = window.innerHeight;
-  stars = Array.from({length: 220}, () => ({
+  stars = Array.from({length: STAR_COUNT}, () => ({
     x: Math.random() * starsC.width,
     y: Math.random() * starsC.height,
     r: Math.random() * 1.6 + 0.3,
@@ -30,17 +44,23 @@ function drawStars() {
 
 resizeStars();
 drawStars();
-window.addEventListener('resize', resizeStars);
+
+// Debounced resize to prevent performance spikes on mobile orientation change
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    resizeStars();
+    fwC.width  = window.innerWidth;
+    fwC.height = window.innerHeight;
+  }, 150);
+});
 
 // ── FIREWORKS ──────────────────────────────────────
 const fwC  = document.getElementById('fireworks-canvas');
 const fCtx = fwC.getContext('2d');
 fwC.width  = window.innerWidth;
 fwC.height = window.innerHeight;
-window.addEventListener('resize', () => {
-  fwC.width  = window.innerWidth;
-  fwC.height = window.innerHeight;
-});
 
 const COLORS = ['#f5c842','#ffe87c','#00c9b1','#ff8c42','#c9960c','#fff','#ff6bff','#42b8ff'];
 let fireworks = [], particles = [];
@@ -71,7 +91,7 @@ class Firework {
     }
   }
   explode() {
-    const n = Math.floor(Math.random() * 30 + 60);
+    const n = Math.floor(Math.random() * (EXPLOSION_PARTICLES / 2) + EXPLOSION_PARTICLES);
     for (let i = 0; i < n; i++) {
       particles.push(new Particle(this.tx, this.ty, this.col));
     }
@@ -143,13 +163,13 @@ function animateFireworks() {
 
 animateFireworks();
 
-// Auto-launch fireworks
-setInterval(launchFirework, 1100);
+// Auto-launch fireworks (reduced frequency on mobile)
+setInterval(launchFirework, FIREWORK_INTERVAL);
 setTimeout(() => {
-  for (let i = 0; i < 5; i++) setTimeout(launchFirework, i * 220);
+  for (let i = 0; i < INITIAL_BURST; i++) setTimeout(launchFirework, i * 220);
 }, 600);
 
-// Click to launch
+// Click/Tap to launch firework
 document.addEventListener('click', launchFirework);
 
 // ── FLOATING LANTERNS ──────────────────────────────
@@ -175,8 +195,8 @@ function createLantern() {
   setTimeout(() => wrap.remove(), (dur + 1) * 1000);
 }
 
-for (let i = 0; i < 12; i++) setTimeout(createLantern, i * 600);
-setInterval(createLantern, 1800);
+for (let i = 0; i < LANTERN_COUNT; i++) setTimeout(createLantern, i * 600);
+setInterval(createLantern, LANTERN_INTERVAL);
 
 // ── GOLD PARTICLES ─────────────────────────────────
 function createGoldParticle() {
@@ -195,8 +215,8 @@ function createGoldParticle() {
   setTimeout(() => p.remove(), 16000);
 }
 
-for (let i = 0; i < 20; i++) setTimeout(createGoldParticle, i * 300);
-setInterval(createGoldParticle, 1200);
+for (let i = 0; i < GOLD_PARTICLE_COUNT; i++) setTimeout(createGoldParticle, i * 300);
+setInterval(createGoldParticle, GOLD_PARTICLE_INTERVAL);
 
 // ── PERSONALIZATION LOGIC ─────────────────────────
 try {
@@ -271,19 +291,20 @@ try {
         updateSignature(name);
         generateShareLink(name.trim());
         
-        // Launch a spectacular fireworks burst of multiple rockets!
-        for (let i = 0; i < 8; i++) {
+        // Launch a spectacular fireworks burst
+        const burstCount = isMobile ? 4 : 8;
+        for (let i = 0; i < burstCount; i++) {
           setTimeout(launchFirework, i * 150);
         }
       }
     });
 
-    // Robust copy to clipboard function (works on local file:/// protocol too)
+    // Robust copy to clipboard function (works on mobile + file:/// protocol)
     const copyToClipboard = (text, inputEl) => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         return navigator.clipboard.writeText(text);
       } else {
-        // Fallback for file:/// protocol and older browsers
+        // Fallback for mobile browsers and file:/// protocol
         inputEl.select();
         inputEl.setSelectionRange(0, 99999);
         try {
@@ -314,7 +335,7 @@ try {
       });
     });
 
-    // Check query param immediately on load (without waiting for DOMContentLoaded)
+    // Check query param immediately on load
     const urlParams = new URLSearchParams(window.location.search);
     const nameParam = urlParams.get('name');
     if (nameParam) {
