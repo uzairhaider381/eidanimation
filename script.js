@@ -1,12 +1,11 @@
 // ── STARS ──────────────────────────────────────────
 const starsC = document.getElementById('stars-canvas');
 const sCtx   = starsC.getContext('2d');
-const phoneFrame = document.querySelector('.phone-frame') || document.body;
 let stars = [];
 
 function resizeStars() {
-  starsC.width  = phoneFrame.clientWidth;
-  starsC.height = phoneFrame.clientHeight;
+  starsC.width  = window.innerWidth;
+  starsC.height = window.innerHeight;
   stars = Array.from({length: 220}, () => ({
     x: Math.random() * starsC.width,
     y: Math.random() * starsC.height,
@@ -31,17 +30,16 @@ function drawStars() {
 
 resizeStars();
 drawStars();
+window.addEventListener('resize', resizeStars);
 
 // ── FIREWORKS ──────────────────────────────────────
 const fwC  = document.getElementById('fireworks-canvas');
 const fCtx = fwC.getContext('2d');
-fwC.width  = phoneFrame.clientWidth;
-fwC.height = phoneFrame.clientHeight;
-
+fwC.width  = window.innerWidth;
+fwC.height = window.innerHeight;
 window.addEventListener('resize', () => {
-  resizeStars();
-  fwC.width  = phoneFrame.clientWidth;
-  fwC.height = phoneFrame.clientHeight;
+  fwC.width  = window.innerWidth;
+  fwC.height = window.innerHeight;
 });
 
 const COLORS = ['#f5c842','#ffe87c','#00c9b1','#ff8c42','#c9960c','#fff','#ff6bff','#42b8ff'];
@@ -152,7 +150,7 @@ setTimeout(() => {
 }, 600);
 
 // Click to launch
-phoneFrame.addEventListener('click', launchFirework);
+document.addEventListener('click', launchFirework);
 
 // ── FLOATING LANTERNS ──────────────────────────────
 const lanternColors = ['#f5c842','#ff8c42','#00c9b1','#ff6bff','#c9960c'];
@@ -161,7 +159,7 @@ function createLantern() {
   const wrap = document.createElement('div');
   wrap.className = 'lantern-wrap';
   const col = lanternColors[Math.floor(Math.random() * lanternColors.length)];
-  wrap.style.left     = Math.random() * 95 + '%';
+  wrap.style.left     = Math.random() * 95 + 'vw';
   const dur = Math.random() * 8 + 10;
   wrap.style.animationDuration = dur + 's';
   wrap.style.animationDelay   = '-' + (Math.random() * dur) + 's';
@@ -173,7 +171,7 @@ function createLantern() {
   ln.style.animationDuration = (Math.random() * 2 + 2) + 's';
 
   wrap.appendChild(ln);
-  phoneFrame.appendChild(wrap);
+  document.body.appendChild(wrap);
   setTimeout(() => wrap.remove(), (dur + 1) * 1000);
 }
 
@@ -187,13 +185,13 @@ function createGoldParticle() {
   const size = Math.random() * 5 + 3;
   p.style.cssText = `
     width:${size}px; height:${size}px;
-    left:${Math.random() * 100}%;
+    left:${Math.random() * 100}vw;
     background:${Math.random() < 0.5 ? '#f5c842' : '#ffe87c'};
     animation-duration:${Math.random() * 6 + 8}s;
     animation-delay:-${Math.random() * 8}s;
     box-shadow: 0 0 6px #f5c842;
   `;
-  phoneFrame.appendChild(p);
+  document.body.appendChild(p);
   setTimeout(() => p.remove(), 16000);
 }
 

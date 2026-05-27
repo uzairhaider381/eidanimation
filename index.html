@@ -11,123 +11,110 @@
 </head>
 <body>
 
-  <!-- Premium Virtual Smartphone Mockup -->
-  <div class="phone-frame">
-    <!-- Smartphone Notch & Status Bar -->
-    <div class="phone-notch"></div>
-    <div class="phone-status-bar">
-      <span class="time">9:41</span>
-      <div class="icons">
-        <span>📶</span>
-        <span>🔋</span>
+  <!-- Twinkling Background Canvas -->
+  <canvas id="stars-canvas"></canvas>
+  <canvas id="fireworks-canvas"></canvas>
+
+  <!-- Main Content Page -->
+  <div class="page">
+
+    <!-- Glowing Crescent Moon -->
+    <div class="moon-wrap">
+      <div class="moon"></div>
+      <div class="moon-star">⭐</div>
+    </div>
+
+    <!-- Celebration Titles -->
+    <h1 class="arabic-title">عيد مبارك</h1>
+    <div class="en-title">Eid Mubarak</div>
+    <div id="sender-signature" class="sender-signature"></div>
+
+    <!-- Golden Divider -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">🌙</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Festive Message Card -->
+    <div class="card" style="animation-delay:0.4s;">
+      <p>
+        May the <span class="highlight">blessings of Allah</span> fill your life with
+        happiness, and may your all prayers be answered.<br/><br/>
+        Wishing you and your family a joyful and peaceful
+        <span class="highlight">Eid ul-Adha</span> filled with love, laughter,
+        and countless blessings. 🌟
+      </p>
+    </div>
+
+    <!-- Hanging Mosque/Moon Ornaments -->
+    <div class="ornaments">
+      <span class="orn">🕌</span>
+      <span class="orn">🌙</span>
+      <span class="orn">✨</span>
+      <span class="orn">🌙</span>
+      <span class="orn">🕌</span>
+    </div>
+
+    <!-- Festive Wishes Cards -->
+    <div class="wishes">
+      <div class="wish-card">
+        <span class="icon">🤲</span>
+        <h3>Peace & Blessings</h3>
+        <p>May Allah's mercy and blessings surround you always.</p>
+      </div>
+      <div class="wish-card">
+        <span class="icon">💛</span>
+        <h3>Joy & Happiness</h3>
+        <p>Wishing your home to be filled with laughter and love.</p>
+      </div>
+      <div class="wish-card">
+        <span class="icon">🌟</span>
+        <h3>Prosperity</h3>
+        <p>May this Eid bring new beginnings and endless success.</p>
       </div>
     </div>
 
-    <!-- Twinkling Background Canvas -->
-    <canvas id="stars-canvas"></canvas>
-    <canvas id="fireworks-canvas"></canvas>
+    <!-- Bottom Arabic Phrase Banner -->
+    <div class="bottom-banner">تقبّل الله منا ومنكم</div>
 
-    <!-- Main Content Page -->
-    <div class="page">
-
-      <!-- Glowing Crescent Moon -->
-      <div class="moon-wrap">
-        <div class="moon"></div>
-        <div class="moon-star">⭐</div>
-      </div>
-
-      <!-- Celebration Titles -->
-      <h1 class="arabic-title">عيد مبارك</h1>
-      <div class="en-title">Eid Mubarak</div>
-      <div id="sender-signature" class="sender-signature"></div>
-
-      <!-- Golden Divider -->
-      <div class="divider">
-        <div class="divider-line"></div>
-        <span class="divider-icon">🌙</span>
-        <div class="divider-line"></div>
-      </div>
-
-      <!-- Festive Message Card -->
-      <div class="card" style="animation-delay:0.4s;">
-        <p>
-          May the <span class="highlight">blessings of Allah</span> fill your life with
-          happiness, and may your all prayers be answered.<br/><br/>
-          Wishing you and your family a joyful and peaceful
-          <span class="highlight">Eid ul-Adha</span> filled with love, laughter,
-          and countless blessings. 🌟
-        </p>
-      </div>
-
-      <!-- Hanging Mosque/Moon Ornaments -->
-      <div class="ornaments">
-        <span class="orn">🕌</span>
-        <span class="orn">🌙</span>
-        <span class="orn">✨</span>
-        <span class="orn">🌙</span>
-        <span class="orn">🕌</span>
-      </div>
-
-      <!-- Festive Wishes Cards -->
-      <div class="wishes">
-        <div class="wish-card">
-          <span class="icon">🤲</span>
-          <h3>Peace & Blessings</h3>
-          <p>May Allah's mercy and blessings surround you always.</p>
-        </div>
-        <div class="wish-card">
-          <span class="icon">💛</span>
-          <h3>Joy & Happiness</h3>
-          <p>Wishing your home to be filled with laughter and love.</p>
-        </div>
-        <div class="wish-card">
-          <span class="icon">🌟</span>
-          <h3>Prosperity</h3>
-          <p>May this Eid bring new beginnings and endless success.</p>
-        </div>
-      </div>
-
-      <!-- Bottom Arabic Phrase Banner -->
-      <div class="bottom-banner">تقبّل الله منا ومنكم</div>
-
-      <!-- Copyright Footer Signature -->
-      <div class="copyright-footer">
-        © 2026 • Created by <span style="color: var(--gold); font-weight: 600;">Uzair Haider</span>
-      </div>
-
+    <!-- Copyright Footer Signature -->
+    <div class="copyright-footer">
+      © 2026 • Created by <span style="color: var(--gold); font-weight: 600;">Uzair Haider</span>
     </div>
 
-    <!-- Floating Personalization Toggle Button -->
-    <button class="sidebar-toggle" id="sidebar-toggle-btn">
-      <span>✍️</span> Customize Greeting
-    </button>
+  </div>
 
-    <!-- Personalization Drawer/Sidebar -->
-    <div class="sidebar" id="personalization-sidebar">
-      <button class="sidebar-close" id="sidebar-close-btn">&times;</button>
-      
-      <h2 class="sidebar-title">Personalize Wish</h2>
-      
+  <!-- Floating Personalization Toggle Button -->
+  <button class="sidebar-toggle" id="sidebar-toggle-btn">
+    <span>✍️</span> Customize Greeting
+  </button>
+
+  <!-- Personalization Drawer/Sidebar -->
+  <div class="sidebar" id="personalization-sidebar">
+    <button class="sidebar-close" id="sidebar-close-btn">&times;</button>
+    
+    <h2 class="sidebar-title">Personalize Wish</h2>
+    
+    <div class="form-group">
+      <label for="username-input">Your Name</label>
+      <input type="text" id="username-input" class="form-input" placeholder="e.g. Uzair Haider" maxlength="30">
+    </div>
+    
+    <button class="form-btn" id="generate-btn">✨ Generate Card</button>
+    
+    <div class="share-section" id="share-section">
       <div class="form-group">
-        <label for="username-input">Your Name</label>
-        <input type="text" id="username-input" class="form-input" placeholder="e.g. Uzair Haider" maxlength="30">
-      </div>
-      
-      <button class="form-btn" id="generate-btn">✨ Generate Card</button>
-      
-      <div class="share-section" id="share-section">
-        <div class="form-group">
-          <label>Shareable Link</label>
-          <div class="share-url-container">
-            <input type="text" id="share-url-input" class="form-input" readonly style="flex: 1; font-size: 0.85rem;">
-            <button class="copy-btn" id="copy-link-btn" title="Copy Link">📋</button>
-          </div>
+        <label>Shareable Link</label>
+        <div class="share-url-container">
+          <input type="text" id="share-url-input" class="form-input" readonly style="flex: 1; font-size: 0.85rem;">
+          <button class="copy-btn" id="copy-link-btn" title="Copy Link">📋</button>
         </div>
-        
-        <a href="#" target="_blank" class="whatsapp-share-btn" id="whatsapp-share-btn">
-          <span>💬</span> Share on WhatsApp
-        </a>
       </div>
+      
+      <a href="#" target="_blank" class="whatsapp-share-btn" id="whatsapp-share-btn">
+        <span>💬</span> Share on WhatsApp
+      </a>
     </div>
   </div>
 
