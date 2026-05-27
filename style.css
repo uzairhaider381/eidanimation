@@ -15,29 +15,93 @@ body {
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
   color: var(--text);
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ── SMARTPHONE FRAME CONTAINER ── */
+.phone-frame {
+  position: relative;
+  width: 412px;
+  height: 860px;
+  background: #060613;
+  border: 12px solid rgba(245, 200, 66, 0.35); /* Premium Gold Bezels */
+  border-radius: 44px;
+  box-shadow: 
+    0 25px 60px -10px rgba(0, 0, 0, 0.95),
+    0 0 45px rgba(245, 200, 66, 0.12),
+    inset 0 0 20px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 28px;
+  background: #000;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 200;
+}
+
+.phone-status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 248, 231, 0.65);
+  z-index: 190;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+  padding-top: 10px;
+}
+
+.phone-status-bar .icons {
+  display: flex;
+  gap: 6px;
 }
 
 /* ── STARS ── */
 #stars-canvas {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
 }
 
 /* ── FIREWORKS ── */
 #fireworks-canvas {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
   pointer-events: none;
 }
 
 /* ── LANTERNS ── */
 .lantern-wrap {
-  position: fixed;
+  position: absolute;
   top: -120px;
   z-index: 2;
   pointer-events: none;
@@ -66,7 +130,7 @@ body {
   0%   { top: -120px; opacity: 0; }
   5%   { opacity: 1; }
   90%  { opacity: 1; }
-  100% { top: 110vh; opacity: 0; }
+  100% { top: 110%; opacity: 0; }
 }
 @keyframes lanternSway {
   from { transform: rotate(-8deg); }
@@ -77,11 +141,26 @@ body {
 .page {
   position: relative;
   z-index: 10;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 50px 20px 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 40px 20px 60px;
+  scroll-behavior: smooth;
+}
+
+.page::-webkit-scrollbar {
+  width: 5px;
+}
+.page::-webkit-scrollbar-track {
+  background: transparent;
+}
+.page::-webkit-scrollbar-thumb {
+  background: rgba(245, 200, 66, 0.2);
+  border-radius: 10px;
 }
 
 /* ── MOON ── */
@@ -91,6 +170,7 @@ body {
   width: 140px;
   height: 140px;
   animation: moonFloat 5s ease-in-out infinite;
+  flex-shrink: 0;
 }
 .moon {
   width: 140px;
@@ -126,6 +206,7 @@ body {
   text-align: center;
   animation: titleGlow 2.5s ease-in-out infinite alternate;
   letter-spacing: 3px;
+  flex-shrink: 0;
 }
 @keyframes titleGlow {
   from { text-shadow: 0 0 20px #f5c84260, 0 0 40px #f5c84230; }
@@ -145,6 +226,7 @@ body {
   animation: shimmer 3s linear infinite;
   margin-top: 10px;
   text-align: center;
+  flex-shrink: 0;
 }
 @keyframes shimmer {
   from { background-position: 0% center; }
@@ -158,6 +240,7 @@ body {
   gap: 14px;
   margin: 28px auto;
   width: min(520px, 90%);
+  flex-shrink: 0;
 }
 .divider-line {
   flex: 1;
@@ -180,6 +263,7 @@ body {
   animation: cardReveal 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
   opacity: 0;
   transform: translateY(40px);
+  flex-shrink: 0;
 }
 @keyframes cardReveal {
   to { opacity: 1; transform: translateY(0); }
@@ -202,6 +286,7 @@ body {
   margin-top: 36px;
   font-size: 2rem;
   animation: float 4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -226,6 +311,7 @@ body {
   max-width: 700px;
   width: 90%;
   margin-top: 44px;
+  flex-shrink: 0;
 }
 .wish-card {
   background: rgba(255,255,255,0.04);
@@ -262,6 +348,7 @@ body {
   letter-spacing: 2px;
   text-align: center;
   animation: pulse 3s ease-in-out infinite;
+  flex-shrink: 0;
 }
 @keyframes pulse {
   0%, 100% { opacity: 0.5; }
@@ -270,7 +357,7 @@ body {
 
 /* ── PARTICLES ── */
 .particle {
-  position: fixed;
+  position: absolute;
   border-radius: 50%;
   pointer-events: none;
   z-index: 3;
@@ -286,8 +373,25 @@ body {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 480px) {
-  .page {
-    padding: 20px 12px 100px;
+  body {
+    padding: 0;
+    margin: 0;
+    background: #000;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .phone-frame {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .phone-notch, .phone-status-bar {
+    display: none;
+  }
+  .phone-frame .page {
+    padding: 24px 12px 100px;
   }
   .moon-wrap {
     width: 100px;
@@ -336,6 +440,7 @@ body {
     width: 100%;
     right: -100%;
     padding: 30px 18px;
+    height: 100% !important;
   }
   .sidebar-title {
     font-size: 1.2rem;
@@ -345,7 +450,7 @@ body {
 
 /* ── PERSONALIZATION SIDEBAR ── */
 .sidebar-toggle {
-  position: fixed;
+  position: absolute;
   bottom: 24px;
   right: 24px;
   z-index: 100;
@@ -368,12 +473,12 @@ body {
   box-shadow: 0 12px 35px rgba(245,200,66,0.55);
 }
 .sidebar {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: -360px;
   width: 340px;
-  height: 100vh;
-  background: rgba(10, 10, 26, 0.9);
+  height: 100%;
+  background: rgba(10, 10, 26, 0.94);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-left: 1px solid rgba(245,200,66,0.25);
@@ -487,7 +592,7 @@ body {
   justify-content: center;
 }
 .copy-btn:hover {
-  background: rgba(245,200,66,0.15);
+  background: rgba(245, 200, 66, 0.15);
   border-color: var(--gold);
 }
 .whatsapp-share-btn {
